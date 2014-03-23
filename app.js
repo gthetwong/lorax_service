@@ -29,7 +29,15 @@ if ('development' == app.get('env')) {
 var params = { host: 'ec2-107-22-163-140.compute-1.amazonaws.com',user: 'yjluvfzfeipgtt',password: 'H6c46uR71OrqAytEjwV5FtaMwY',database: 'd9ln0vulna1mlo', ssl: true };
 var client = new pg.Client(params);
 client.connect();
-query = client.query('CREATE TABLE test');
+client.query('CREATE TABLE IF NOT EXISTS soildata (id SERIAL PRIMARY KEY, reading INTEGER, user_id INTEGER, plant_id INTEGER, redline INTEGER, isdry Boolean)');
+client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(750, 1, 1, 800, false)');
+client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(600, 1, 2, 1000, false)');
+client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(900, 1, 1, 800, true)');
+
+query = client.query('SELECT * FROM soildata WHERE plant_id = 2', function(err, result){
+  // console.log(result);
+  console.log(result.rows);
+});
 query.on('end', function() { client.end(); });
 
 
