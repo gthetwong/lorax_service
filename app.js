@@ -46,11 +46,13 @@ app.get('/', function(req, res){
 app.post('/', function(req, res){
   res.send(req.body);
   var data = req.body, plant_id, user_id, reading;
+  console.log(data);
   plant_id = data.plant_id;
-  console.log(plant_id);
   user_id = data.user_id;
-  console.log(user_id);
   reading = data.reading;
+  
+  console.log(plant_id);
+  console.log(user_id);
   console.log(reading);
 });
 
