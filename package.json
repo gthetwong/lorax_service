@@ -9,8 +9,7 @@
     "request": "~2.34.0",
     "url": "~0.7.9",
     "logfmt": "~1.0.0",
-    "pg": "~2.11.1",
-
+    "pg": "~2.11.1"
   },
   "devDependencies": {},
   "scripts": {
