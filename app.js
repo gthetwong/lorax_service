@@ -50,10 +50,12 @@ app.post('/', function(req, res){
   plant_id = data.plant_id;
   user_id = data.user_id;
   reading = data.reading;
-  
   console.log(plant_id);
   console.log(user_id);
   console.log(reading);
+
+  client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES('+reading+', '+user_id+', '+plant_id+', 800, false)');
+  console.log("inserted into database");
 });
 
 createTable();
