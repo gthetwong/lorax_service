@@ -1,6 +1,7 @@
 {
   "name": "lorax",
   "version": "0.0.0",
+  "private": true,
   "description": "automated water sensor app for plants",
   "main": "app.js",
   "dependencies": {
@@ -8,7 +9,8 @@
     "request": "~2.34.0",
     "url": "~0.7.9",
     "logfmt": "~1.0.0",
-    "pg": "~2.11.1"
+    "pg": "~2.11.1",
+
   },
   "devDependencies": {},
   "scripts": {
