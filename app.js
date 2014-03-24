@@ -1,8 +1,8 @@
- var express = require("express");
- var logfmt = require("logfmt");
+var express = require("express");
+var logfmt = require("logfmt");
 var app = module.exports =  express();
- var url = require('url');
- var pg = require('pg');
+var url = require('url');
+var pg = require('pg');
 var http = require('http');
 var path = require('path');
 
@@ -41,12 +41,10 @@ var createTable = function(){
 app.get('/', function(req, res){
   createTable();
 
-  // var results;
-
   query = client.query('SELECT * FROM soildata WHERE plant_id = 2');
 
   query.on('row', function(result){
-    console.log(result);
+    // console.log(result);
     if (!result){
       return res.send('sorry no data');
     } else {
@@ -56,9 +54,6 @@ app.get('/', function(req, res){
   // query.on('end', function() { 
   //   client.end(); 
   // });
-  // console.log(results);
-  // return results;
-  // res.send(results);
 
 });
 
