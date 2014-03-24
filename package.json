@@ -16,6 +16,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "https://github.com/gthetwong/lorax_client",
-  "author": "graham wong/sam choi",
+  "author": "graham wong/samuel choi",
   "license": "BSD"
 }
