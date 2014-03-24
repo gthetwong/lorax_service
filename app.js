@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
+app.use(express.bodyParser());  // including this line to try app.post below
 app.use(express.static(path.join(__dirname, 'public')));
 // app.use(logfmt.requestLogger());
 
@@ -35,40 +36,33 @@ var createTable = function(){
   // client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(900, 1, 1, 800, true)');
 }; 
 
-app.get('/', function(req, res){
-  
-
+app.get('/', function(req, res){ 
   query = client.query('SELECT * FROM soildata', function(err, result){
-    res.send(result);
-
+    if(!result){
+      return res.send('no data');
+    } else {
+      res.send(result);
+    }
   });
-
 });
 
 
 app.get('/:id', function(req, res){
- 
-
   var id = req.params.id;
   console.log(id);
-
-
   query = client.query('SELECT * FROM soildata WHERE plant_id = ' + id, function(err, result){
-    res.send(result);
-
+    if(!result){
+      return res.send('no data');
+    } else {
+      res.send(result);
+    }
   });
 
-  // query.on('row', function(result){
-  //   // console.log(result);
-  //   if (!result){
-  //     return res.send('sorry no data');
-  //   } else {
-  //     res.send(result);
-  //   }
-  // });  
-  // query.on('end', function() { 
-  //   client.end(); 
-  // });
+});
+
+app.post('/', function(req, res){
+  res.send(req.body);
+  
 
 });
 
