@@ -46,6 +46,7 @@ app.get('/', function(req, res){
 app.post('/', function(req, res){
   res.send(req.body);
   var data = req.body, plant_id, user_id, reading;
+  console.log(req);
   console.log(data);
   plant_id = data.plant_id;
   user_id = data.user_id;
