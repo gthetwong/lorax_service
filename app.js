@@ -6,11 +6,12 @@ var pg = require('pg');
 var http = require('http');
 var path = require('path');
 
-
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hjs');
+// app.set('view engine', 'hjs');
+app.engine('html', require('ejs').renderFile);
+
 // app.use(express.favicon());
 app.use(express.json());
 app.use(express.urlencoded());
@@ -36,7 +37,30 @@ var createTable = function(){
   // client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(900, 1, 1, 800, true)');
 }; 
 
-app.get('/', function(req, res){ 
+
+app.get('/', function(req, res){
+  res.render('index.html');
+});
+
+
+app.post('/', function(req, res){
+  res.send(req.body);
+  var data = req.body, plant_id, user_id, reading;
+  plant_id = data.plant_id;
+  console.log(plant_id);
+  user_id = data.user_id;
+  console.log(user_id);
+  reading = data.reading;
+  console.log(reading);
+});
+
+createTable();
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
+});
+
+
+app.get('/api', function(req, res){ 
   query = client.query('SELECT * FROM soildata', function(err, result){
     if(!result){
       return res.send('no data');
@@ -47,7 +71,7 @@ app.get('/', function(req, res){
 });
 
 
-app.get('/:id', function(req, res){
+app.get('/api/:id', function(req, res){
   var id = req.params.id;
   console.log(id);
   query = client.query('SELECT * FROM soildata WHERE plant_id = ' + id, function(err, result){
@@ -60,16 +84,6 @@ app.get('/:id', function(req, res){
 
 });
 
-app.post('/', function(req, res){
-  res.send(req.body);
-  
-
-});
-
-createTable();
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
 
 
 
