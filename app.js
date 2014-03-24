@@ -35,29 +35,44 @@ var createTable = function(){
   // client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(900, 1, 1, 800, true)');
 }; 
 
-
-
-
 app.get('/', function(req, res){
-  createTable();
+  
 
-  query = client.query('SELECT * FROM soildata WHERE plant_id = 2');
+  query = client.query('SELECT * FROM soildata', function(err, result){
+    res.send(result);
 
-  query.on('row', function(result){
-    // console.log(result);
-    if (!result){
-      return res.send('sorry no data');
-    } else {
-      res.send(result);
-    }
   });
+
+});
+
+
+app.get('/:id', function(req, res){
+ 
+
+  var id = req.params.id;
+  console.log(id);
+
+
+  query = client.query('SELECT * FROM soildata WHERE plant_id = ' + id, function(err, result){
+    res.send(result);
+
+  });
+
+  // query.on('row', function(result){
+  //   // console.log(result);
+  //   if (!result){
+  //     return res.send('sorry no data');
+  //   } else {
+  //     res.send(result);
+  //   }
+  // });  
   // query.on('end', function() { 
   //   client.end(); 
   // });
 
 });
 
-
+createTable();
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
