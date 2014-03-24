@@ -43,9 +43,9 @@ app.get('/', function(req, res){
 });
 
 
-app.post('/', function(req, res){
+app.post('/:plant_id/:user_id/:reading', function(req, res){
   
-  var data = req.params; //plant_id, user_id, reading;
+  var data = req.params; 
   console.log(data);
 
   var plant_id = data.plant_id;
@@ -55,7 +55,7 @@ app.post('/', function(req, res){
   console.log(user_id);
   console.log(reading);
 
-  client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES('+reading+', '+user_id+', '+plant_id+', 800, false)');
+client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES('+reading+', '+user_id+', '+plant_id+', 800, false)';
   console.log("inserted into database");
   res.send(req.params);
 });
