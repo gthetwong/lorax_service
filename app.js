@@ -80,10 +80,10 @@ app.get('/api', function(req, res){
 });
 
 
-app.get('/api/:id', function(req, res){
-  var id = req.params.id;
+app.get('/api/:user_id', function(req, res){
+  var id = req.params.user_id;
   console.log(id);
-  query = client.query('SELECT * FROM soildata WHERE plant_id = ' + id, function(err, result){
+  query = client.query('SELECT * FROM soildata WHERE user_id = ' + id, function(err, result){
     if(!result){
       return res.send('no data');
     } else {
