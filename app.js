@@ -6,6 +6,7 @@ var pg = require('pg');
 var http = require('http');
 var path = require('path');
 
+console.log(process.env.DATABASE_URL);
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -26,8 +27,9 @@ if ('development' == app.get('env')) {
   app.use(express.logger('dev'));
 }
 
-var params = { host: 'ec2-107-22-163-140.compute-1.amazonaws.com',user: 'yjluvfzfeipgtt',password: 'H6c46uR71OrqAytEjwV5FtaMwY',database: 'd9ln0vulna1mlo', ssl: true };
-var client = new pg.Client(params);
+// var params = { host: 'ec2-107-22-163-140.compute-1.amazonaws.com',user: 'yjluvfzfeipgtt',password: 'H6c46uR71OrqAytEjwV5FtaMwY',database: 'd9ln0vulna1mlo', ssl: true };
+
+var client = new pg.Client(process.env.DATABASE_URL);
 
 var createTable = function(){
   client.connect();
@@ -61,6 +63,7 @@ client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) V
 });
 
 createTable();
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
