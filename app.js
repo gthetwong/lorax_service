@@ -33,7 +33,7 @@ var client = new pg.Client(process.env.DATABASE_URL);
 
 var createTable = function(){
   client.connect();
-  client.query('CREATE TABLE IF NOT EXISTS soildata (id SERIAL PRIMARY KEY, reading INTEGER, pi_id INTEGER, sensor_id INTEGER isdry Boolean)');
+  client.query('CREATE TABLE IF NOT EXISTS soildata (id SERIAL PRIMARY KEY, reading INTEGER, pi_id INTEGER, sensor_id INTEGER, isdry Boolean)');
   client.query('CREATE TABLE IF NOT EXISTS piunits (id SERIAL PRIMARY KEY, ownedby TEXT, serial_num INTEGER, redline INTEGER)');
   // client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(750, 1, 1, 800, false)');
   // client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(600, 1, 2, 1000, false)');
