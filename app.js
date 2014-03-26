@@ -34,7 +34,7 @@ var client = new pg.Client(process.env.DATABASE_URL);
 var createTable = function(){
   client.connect();
   client.query('CREATE TABLE IF NOT EXISTS soilData (id SERIAL PRIMARY KEY, reading INTEGER, pi_id INTEGER, sensor_id INTEGER,  isdry Boolean)');
-  client.query('CREATE TABLE IF NOT EXISTS piUnit (id SERIAL PRIMARY KEY, owned_by TEXT, serial_num INTEGER, redline INTEGER)');
+  client.query('CREATE TABLE IF NOT EXISTS piUnit (id SERIAL PRIMARY KEY, owned_by STRING, serial_num INTEGER, redline INTEGER)');
   // client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(750, 1, 1, 800, false)');
   // client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(600, 1, 2, 1000, false)');
   // client.query('INSERT INTO soildata(reading, user_id, plant_id, redline, isdry) VALUES(900, 1, 1, 800, true)');
@@ -63,11 +63,7 @@ client.query('INSERT INTO soilData(reading, user_id, plant_id, redline, isdry) V
   res.send(req.params);
 });
 
-createTable();
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
 
 
 app.get('/api', function(req, res){ 
@@ -91,6 +87,14 @@ app.get('/api/:user_id', function(req, res){
       res.send(result);
     }
   });
+
+
+createTable();
+
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
+});
+
 
 });
 
