@@ -74,7 +74,7 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   console.log(sensor_id);
   console.log(reading);
 
-  client.query('INSERT INTO soildata(reading, pi_id, sensor_id) VALUES($1, $2)', [reading, pi_id],
+  client.query('INSERT INTO soildata(reading, pi_id, sensor_id) VALUES($1, $2, $3)', [reading, pi_id, sensor_id],
     // +', ' + pi_id + ', ' + sensor_id + ')', 
   function(err, result){
     if (err){console.log(err);}
