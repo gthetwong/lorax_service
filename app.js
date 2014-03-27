@@ -68,7 +68,7 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   console.log(data);
 
   var reading = data.reading;
-  var pi_id = "some id";
+  var pi_id = data.pi_id;
   var sensor_id = data.sensor_id;
   console.log(pi_id);
   console.log(sensor_id);
