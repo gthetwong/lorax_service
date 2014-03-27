@@ -74,8 +74,11 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   console.log(sensor_id);
   console.log(reading);
 
-client.query('INSERT INTO soildata(reading, pi_id, sensor_id, isdry) VALUES(' + reading + ', ' + pi_id + ', ' + sensor_id + ', false)');
-  res.send(req.params);
+  client.query('INSERT INTO soildata(reading, pi_id, sensor_id, isdry) VALUES(' + reading + ', ' + pi_id + ', ' + sensor_id + ', false)', 
+  function(err, result){
+    if (err){console.log(err);}
+    res.send(req.params);
+  });
 });
 
 
@@ -92,8 +95,11 @@ app.post('/register/:ownedby/:serial_num/:redline', function(req, res){
   console.log(serial_num);
   console.log(redline);
 
-client.query('INSERT INTO piunits(ownedby, serial_num, redline) VALUES('+ownedby+', '+serial_num+', '+redline+')');
-  res.send(req.params);
+client.query('INSERT INTO piunits(ownedby, serial_num, redline) VALUES('+ownedby+', '+serial_num+', '+redline+')',
+  function(err, result){
+    if (err){console.log(err);}
+    res.send(req.params);
+  });
 });
 
 //Get soil data based on user_id  <<-------------------(Deprecated)
