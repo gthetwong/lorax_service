@@ -34,8 +34,8 @@ var client = new pg.Client(process.env.DATABASE_URL);
 //Create Necessary Tables in Postgres
 var createTable = function(){
   client.connect();
-  client.query('CREATE TABLE IF NOT EXISTS soildata (id SERIAL PRIMARY KEY, reading INTEGER, pi_id TEXT, sensor_id INTEGER, isdry Boolean)');
-  client.query('CREATE TABLE IF NOT EXISTS piunits (id SERIAL PRIMARY KEY, ownedby TEXT, serial_num TEXT, redline INTEGER)');
+  client.query('CREATE TABLE IF NOT EXISTS soildata (id SERIAL PRIMARY KEY, reading INTEGER, pi_id text, sensor_id INTEGER, isdry Boolean)');
+  client.query('CREATE TABLE IF NOT EXISTS piunits (id SERIAL PRIMARY KEY, ownedby text, serial_num text, redline INTEGER)');
 }; 
 
 
