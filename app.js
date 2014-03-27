@@ -96,12 +96,13 @@ app.post('/register/:ownedby/:serial_num/:redline', function(req, res){
   console.log(serial_num);
   console.log(redline);
 
-client.query('INSERT INTO piunits(ownedby, serial_num, redline) VALUES('+ownedby+', '+serial_num+', '+redline+')',
-  function(err, result){
+client.query('INSERT INTO piunits(ownedby, serial_num, redline) VALUES($1, $2, $3)', [ownedby, serial_num, redline], 
+function(err, result){
     if (err){console.log(err);}
     res.send(req.params);
   });
 });
+//'+ownedby+', '+serial_num+', '+redline+')',
 
 //Get soil data based on user_id  <<-------------------(Deprecated)
 // app.get('/api/:user_id', function(req, res){
