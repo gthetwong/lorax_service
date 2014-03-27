@@ -74,8 +74,8 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   console.log(sensor_id);
   console.log(reading);
 
-client.query('INSERT INTO soildata(reading, pi_id, sensor_id) VALUES('+reading+', '+pi_id+', '+sensor_id+')');
-  // res.send(req.params);
+client.query('INSERT INTO soildata(reading, pi_id, sensor_id, isdry) VALUES(' + reading + ', ' + pi_id + ', ' + sensor_id + ', false)');
+  res.send(req.params);
 });
 
 
