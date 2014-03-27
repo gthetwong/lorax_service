@@ -70,8 +70,8 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   var reading = data.reading;
   var pi_id = data.pi_id;
   var sensor_id = data.sensor_id;
-  console.log(plant_id);
-  console.log(user_id);
+  console.log(pi_id);
+  console.log(sensor_id);
   console.log(reading);
 
 client.query('INSERT INTO soildata(reading, pi_id, sensor_id) VALUES('+reading+', '+pi_id+', '+sensor_id+')');
