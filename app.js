@@ -102,6 +102,16 @@ function(err, result){
     res.send(req.params);
   });
 });
+
+app.get('/plantdata/:serial_num/:channel_num', function(req, res){
+  var serial_num = req.params.serial_num;
+  var channel_num = req.params.channel_num;
+
+  client.query('SELECT * FROM sensor ON pi_id ='+ serial_num + 'WHERE sensor_id = '+ channel_num, function(err, result){
+    if (err){console.log(err);}
+    res.send(result);
+  });
+});
 //'+ownedby+', '+serial_num+', '+redline+')',
 
 //Get soil data based on user_id  <<-------------------(Deprecated)
