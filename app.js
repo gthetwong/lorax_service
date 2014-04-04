@@ -35,7 +35,7 @@ var client = new pg.Client(process.env.DATABASE_URL);
 var createTable = function(){
   client.connect();
   client.query('CREATE TABLE IF NOT EXISTS soildata (id SERIAL PRIMARY KEY, reading INTEGER, pi_id text, sensor_id INTEGER, isdry Boolean)');
-  client.query('CREATE TABLE IF NOT EXISTS piunits (id SERIAL PRIMARY KEY, ownedby text, serial_num text, redline INTEGER)');
+  client.query('CREATE TABLE IF NOT EXISTS piunits (id SERIAL PRIMARY KEY, ownedby text, serial_num text, redline INTEGER, sensor_id INTEGER)');
 }; 
 
 
@@ -84,7 +84,7 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
 
 
 //add User's new Pi Unit to Pi Unit database
-app.post('/register/:ownedby/:serial_num/:redline', function(req, res){
+app.post('/register/:ownedby/:serial_num/:sensor_id/:redline', function(req, res){
   
   var data = req.params; 
   console.log(data);
@@ -96,7 +96,7 @@ app.post('/register/:ownedby/:serial_num/:redline', function(req, res){
   console.log(serial_num);
   console.log(redline);
 
-client.query('INSERT INTO piunits(ownedby, serial_num, redline) VALUES($1, $2, $3)', [ownedby, serial_num, redline], 
+client.query('INSERT INTO piunits(ownedby, serial_num, sensor_id, redline) VALUES($1, $2, $3, $4)', [ownedby, serial_num, sensor_id, redline], 
 function(err, result){
     if (err){console.log(err);}
     res.send(req.params);
