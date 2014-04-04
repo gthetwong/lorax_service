@@ -91,6 +91,7 @@ app.post('/register/:ownedby/:serial_num/:sensor_id/:redline', function(req, res
 
   var ownedby = data.ownedby;
   var serial_num = data.serial_num;
+  var sensor_id = data.sensor_id;
   var redline = data.redline;
   console.log(ownedby);
   console.log(serial_num);
