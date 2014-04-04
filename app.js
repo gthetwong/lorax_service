@@ -34,7 +34,7 @@ var client = new pg.Client(process.env.DATABASE_URL);
 //Create Necessary Tables in Postgres
 var createTable = function(){
   client.connect();
-  client.query('CREATE TABLE IF NOT EXISTS soildata (id SERIAL PRIMARY KEY, reading INTEGER, pi_id text, sensor_id INTEGER, isdry Boolean)');
+  client.query('CREATE TABLE IF NOT EXISTS soildata (id SERIAL PRIMARY KEY, reading INTEGER, pi_id text, sensor_id INTEGER, recordtime timestamptz, isdry Boolean)');
   client.query('CREATE TABLE IF NOT EXISTS piunits (id SERIAL PRIMARY KEY, ownedby text, serial_num text, redline INTEGER, sensor_id INTEGER)');
 }; 
 
@@ -70,11 +70,12 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   var reading = data.reading;
   var pi_id = data.pi_id;
   var sensor_id = data.sensor_id;
+  var date = new Date();
   console.log(pi_id);
   console.log(sensor_id);
   console.log(reading);
 
-  client.query('INSERT INTO soildata(reading, pi_id, sensor_id) VALUES($1, $2, $3)', [reading, pi_id, sensor_id],
+  client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime) VALUES($1, $2, $3, $4)', [reading, pi_id, sensor_id, date],
     // +', ' + pi_id + ', ' + sensor_id + ')', 
   function(err, result){
     if (err){console.log(err);}
