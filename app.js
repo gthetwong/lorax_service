@@ -107,7 +107,7 @@ app.get('/plantdata/:serial_num/:channel_num', function(req, res){
   var serial_num = req.params.serial_num;
   var channel_num = req.params.channel_num;
 
-  client.query('SELECT * FROM soildata WHERE pi_id = "000000008d7d7bd3" AND sensor_id = 0', function(err, result){
+  client.query('SELECT * FROM soildata WHERE pi_id = 000000008d7d7bd3 AND sensor_id = 0', function(err, result){
     if (err){console.log(err);}
     res.send(result);
   });
