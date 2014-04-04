@@ -107,7 +107,7 @@ app.get('/plantdata/:serial_num/:channel_num', function(req, res){
   var serial_num = req.params.serial_num;
   var channel_num = req.params.channel_num;
 
-  client.query('SELECT * FROM sensor ON pi_id ='+ serial_num + 'WHERE sensor_id = '+ channel_num, function(err, result){
+  client.query('SELECT * FROM sensor WHERE pi_id = '+ serial_num + ' AND sensor_id = '+ channel_num, function(err, result){
     if (err){console.log(err);}
     res.send(result);
   });
