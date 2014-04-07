@@ -81,18 +81,22 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
     function(err, result){
       // console.log((result.rows[0].redline), "this is the result");
       var redline_value = result.rows[0].redline; 
-      console.log(reading, "this is the reading");
+      // console.log(reading, "this is the reading");
       // if(err){console.log(err);}
-      // if(reading > (result.rows[0].redline)){
+      if(reading > redline_value){
+        console.log("reading is dry");
       //   var dry = true;
       //   return dry;
+        } else {
+          console.log("reading is moist");
+        }
       });
 
   // console.log(isdry, "isdry?");
 
   client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, isdry],
   function(err, result){
-    if (err){console.log(err);}
+    if (err){console.log(err, "error inserting to PG");}
     res.send(req.params);
   });
 });
