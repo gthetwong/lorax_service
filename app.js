@@ -79,8 +79,9 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   console.log(date);
   var isdry = client.query('SELECT redline FROM piunits INNER JOIN soildata ON pi_id = serial_num WHERE soildata.sensor_id = piunits.sensor_id Limit 1',
     function(err, result){
+      console.log(result);
       if(err){console.log(err);}
-      if(reading > redline){
+      if(reading > result){
         var dry = true;
         return dry;
       }
