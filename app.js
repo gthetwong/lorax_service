@@ -70,9 +70,9 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   var reading = data.reading;
   var pi_id = data.pi_id;
   var sensor_id = data.sensor_id;
-  // var d = (new Date()+'').split(' ');
-  // var date = [d[1], d[2], d[3], d[4]].join(' '); //formatting datetime to show on chart
-  var date = new Date();
+  var d = (new Date()+'').split(' ');
+  var date = [d[1], d[2], d[3], d[4]].join(' '); //formatting datetime to show on chart
+  // var date = new Date();
   console.log(pi_id);
   console.log(sensor_id);
   console.log(reading);
