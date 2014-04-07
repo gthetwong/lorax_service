@@ -77,11 +77,17 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   console.log(sensor_id);
   console.log(reading);
   console.log(date);
-  // client.query('SELECT redline FROM piunits INNER JOIN soildata ON ')
+  var isdry = client.query('SELECT redline FROM piunits INNER JOIN soildata ON pi_id = serial_num WHERE soildata.sensor_id = piunits.sensor_id Limit 1',
+    function(err, result){
+      if(err){console.log(err);}
+      if(reading > redline){
+        isdry = true;
+      }
+      return isdry;
+  });
+  console.log(isdry);
 
-
-  client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime) VALUES($1, $2, $3, $4)', [reading, pi_id, sensor_id, date],
-    // +', ' + pi_id + ', ' + sensor_id + ')', 
+  client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, isdry],
   function(err, result){
     if (err){console.log(err);}
     res.send(req.params);
