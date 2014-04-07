@@ -74,6 +74,8 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   console.log(pi_id);
   console.log(sensor_id);
   console.log(reading);
+  // client.query('SELECT redline FROM piunits INNER JOIN soildata ON ')
+
 
   client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime) VALUES($1, $2, $3, $4)', [reading, pi_id, sensor_id, date],
     // +', ' + pi_id + ', ' + sensor_id + ')', 
