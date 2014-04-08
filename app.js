@@ -78,7 +78,7 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   console.log(reading);
   console.log(date);
 
-  function (){ client.query('SELECT redline FROM piunits INNER JOIN soildata ON pi_id = serial_num WHERE soildata.sensor_id = piunits.sensor_id Limit 1',
+  function(){ client.query('SELECT redline FROM piunits INNER JOIN soildata ON pi_id = serial_num WHERE soildata.sensor_id = piunits.sensor_id Limit 1',
     function(err, result){
       console.log((result.rows[0].redline), "this is the result");
       var redline_value = result.rows[0].redline; 
