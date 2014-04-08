@@ -93,15 +93,17 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
           dryness = false;
         }
         return dryness;
+      }).done(function(dryness){
+        client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, dryness],
+            function(err, result){
+                if (err){console.log(err, "error inserting to PG");}
+                res.send(req.params);
+            });
       });
   };
-  console.log(isdry(), "isdry?");
+  // console.log(dryness, "isdry?");
 
-  client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, isdry],
-  function(err, result){
-    if (err){console.log(err, "error inserting to PG");}
-    res.send(req.params);
-  });
+  
 });
 
 
