@@ -93,7 +93,7 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
         }
       });
 
-  console.log(isdry, "isdry?");
+  console.log(isdry(), "isdry?");
 
   client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, isdry],
   function(err, result){
