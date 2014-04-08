@@ -86,9 +86,10 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
       if(reading > redline_value){
         console.log("reading is dry");
       //   var dry = true;
-      //   return dry;
+        return true;
         } else {
           console.log("reading is moist");
+          return false;
         }
       });
 
