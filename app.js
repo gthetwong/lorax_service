@@ -92,9 +92,11 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
           console.log("reading is moist");
           dryness = false;
         }
+        console.log(dryness);
         return dryness;
       },
         function(dryness){
+        console.log(dryness);
         client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, dryness],
             function(err, result){
                 if (err){console.log(err, "error inserting to PG");}
