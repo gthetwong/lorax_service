@@ -5,6 +5,8 @@ var url = require('url');
 var pg = require('pg');
 var http = require('http');
 var path = require('path');
+var request = require('request');
+
 
 console.log(process.env.DATABASE_URL);
 // all environments
@@ -79,10 +81,11 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
   console.log(date);
 
  
-    client.query('SELECT redline FROM piunits INNER JOIN soildata ON pi_id = serial_num WHERE soildata.sensor_id = piunits.sensor_id Limit 1',
+    client.query('SELECT redline, ownedby FROM piunits INNER JOIN soildata ON pi_id = serial_num WHERE soildata.sensor_id = piunits.sensor_id Limit 1',
     function(err, result){
       // console.log((result.rows[0].redline), "this is the result");
       var redline_value = result.rows[0].redline; 
+      var ownedby = result.rows[0].ownedby;
       // console.log(reading, "this is the reading");
       var dryness;
       if(reading > redline_value){
@@ -93,7 +96,11 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
           console.log("reading is moist");
           dryness = false;
         }
-        
+
+      if(dryness){
+      request.post("http://projectlorax.herokuapp.com/notify/" + ownedby+"/"+pi_id+"/"+sensor_id);
+      }
+
         client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, dryness],
             function(err, result){
                 if (err){console.log(err, "error inserting to PG");}
@@ -133,19 +140,6 @@ app.get('/plantdata/:serial_num/:channel_num', function(req, res){
     res.send(result);
   });
 });
-//'+ownedby+', '+serial_num+', '+redline+')',
-
-//Get soil data based on user_id  <<-------------------(Deprecated)
-// app.get('/api/:user_id', function(req, res){
-//   var id = req.params.user_id;
-//   console.log(id);
-//   query = client.query('SELECT * FROM soildata WHERE user_id = ' + id, function(err, result){
-//     if(!result){
-//       return res.send('no data');
-//     } else {
-//       res.send(result);
-//     }
-//   });
 
 createTable();
 
