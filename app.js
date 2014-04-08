@@ -81,43 +81,25 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
  
     client.query('SELECT redline FROM piunits INNER JOIN soildata ON pi_id = serial_num WHERE soildata.sensor_id = piunits.sensor_id Limit 1',
     function(err, result){
-      console.log((result.rows[0].redline), "this is the result");
+      // console.log((result.rows[0].redline), "this is the result");
       var redline_value = result.rows[0].redline; 
-      console.log(reading, "this is the reading");
-      // if(err){console.log(err);}
+      // console.log(reading, "this is the reading");
       var dryness;
       if(reading > redline_value){
-        console.log("reading is dry");
+        // console.log("reading is dry");
         dryness = true;
         // return true;
         } else {
           console.log("reading is moist");
           dryness = false;
         }
-
-        console.log(dryness,"first");
-
+        
         client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, dryness],
             function(err, result){
                 if (err){console.log(err, "error inserting to PG");}
                 res.send(req.params);
-            });
+        });
     });
-  
-
-
-
-  // var howdry = isitdry();
-  // var insert = function(dryness){
-  //       console.log(dryness,"second");
-  //       client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, dryness],
-  //           function(err, result){
-  //               if (err){console.log(err, "error inserting to PG");}
-  //               res.send(req.params);
-  //           });
-  //     };
-  //     insert(howdry);
-  // // console.log(dryness, "isdry?");
 });
 
 
