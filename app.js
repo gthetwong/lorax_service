@@ -86,19 +86,19 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
       // console.log((result.rows[0].redline), "this is the result");
       var redline_value = result.rows[0].redline; 
       var ownedby = result.rows[0].ownedby;
-      // console.log(reading, "this is the reading");
       var dryness;
       if(reading > redline_value){
-        // console.log("reading is dry");
         dryness = true;
-        // return true;
         } else {
-          console.log("reading is moist");
           dryness = false;
         }
 
       if(dryness){
-      request.post("http://projectlorax.herokuapp.com/notify/" + ownedby+"/"+pi_id+"/"+sensor_id);
+        client.query('SELECT * FROM soildata WHERE pi_id = '+ pi_id +' AND sensor_id = '+sensor_id + 'AND isdry = true ORDER BY recordtime desc limit 1', function(err, result){
+          if (err){console.log(err);}
+          console.log((date - result.rows[0].recordtime));
+      // request.post("http://projectlorax.herokuapp.com/notify/" + ownedby+"/"+pi_id+"/"+sensor_id);
+        });
       }
 
         client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, dryness],
