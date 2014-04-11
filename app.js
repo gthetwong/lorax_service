@@ -103,16 +103,16 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
           console.log(last_tweet);
           console.log(currentdate);
           console.log(currentdate-last_tweet);
-          res.send("200, success");
-      // request.post("http://projectlorax.herokuapp.com/notify/" + ownedby+"/"+pi_id+"/"+sensor_id);
+          // res.send("200, success");
+      request.post("http://projectlorax.herokuapp.com/notify/" + ownedby+"/"+pi_id+"/"+sensor_id);
         });
       }
 
-        // client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, dryness],
-        //     function(err, result){
-        //         if (err){console.log(err, "error inserting to PG");}
-        //         res.send(req.params);
-        // });
+        client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, dryness],
+            function(err, result){
+                if (err){console.log(err, "error inserting to PG");}
+                res.send(req.params);
+        });
     });
 });
 
