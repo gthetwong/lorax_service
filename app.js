@@ -93,20 +93,20 @@ app.post('/:reading/:pi_id/:sensor_id', function(req, res){
           dryness = false;
         }
 
-      if(dryness){
-        client.query('SELECT * FROM soildata WHERE pi_id = \''+ pi_id +'\' AND sensor_id = '+sensor_id + 'AND isdry = false ORDER BY recordtime desc limit 1', function(err, result){
-          if (err){console.log(err);}
-          var last_tweet = new Date(result.rows[0].recordtime);
-          var currentdate = new Date(date);
-          var difference= (currentdate-last_tweet);
-          difference = (difference/3600000);
-          console.log(last_tweet);
-          console.log(currentdate);
-          console.log(currentdate-last_tweet);
-          // res.send("200, success");
-      request.post("http://projectlorax.herokuapp.com/notify/" + ownedby+"/"+pi_id+"/"+sensor_id);
-        });
-      }
+      // if(dryness){
+      //   // client.query('SELECT * FROM soildata WHERE pi_id = \''+ pi_id +'\' AND sensor_id = '+sensor_id + 'AND isdry = false ORDER BY recordtime desc limit 1', function(err, result){
+      //   //   if (err){console.log(err);}
+      //   //   var last_tweet = new Date(result.rows[0].recordtime);
+      //   //   var currentdate = new Date(date);
+      //   //   var difference= (currentdate-last_tweet);
+      //   //   difference = (difference/3600000);
+      //   //   console.log(last_tweet);
+      //   //   console.log(currentdate);
+      //   //   console.log(currentdate-last_tweet);
+      //     // res.send("200, success");
+      // request.post("http://projectlorax.herokuapp.com/notify/" + ownedby+"/"+pi_id+"/"+sensor_id);
+      //   });
+      // }
 
         client.query('INSERT INTO soildata(reading, pi_id, sensor_id, recordtime, isdry) VALUES($1, $2, $3, $4, $5)', [reading, pi_id, sensor_id, date, dryness],
             function(err, result){
