@@ -145,7 +145,7 @@ app.get('/plantdata/:serial_num/:channel_num', function(req, res){
   var serial_num = req.params.serial_num;
   var channel_num = req.params.channel_num;
 
-  client.query("SELECT * FROM soildata WHERE pi_id = '" + serial_num+ "' AND sensor_id = "+ channel_num + "ORDER BY recordtime desc limit 25", function(err, result){
+  client.query("SELECT * FROM soildata WHERE pi_id = '" + serial_num+ "' AND sensor_id = "+ channel_num + "ORDER BY recordtime limit 25", function(err, result){
     if (err){console.log(err);}
     res.send(result);
   });
